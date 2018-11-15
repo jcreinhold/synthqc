@@ -88,9 +88,9 @@ def normalized_cross_correlation(x, y, mask=None):
     y = y if mask is None else y[mask == 1]
     xm = x.mean()
     ym = y.mean()
-    xhat = (x - xm) / np.sqrt(np.sum((x - xm) ** 2))
-    yhat = (y - ym) / np.sqrt(np.sum((y - ym) ** 2))
-    ncc = np.sum(xhat * yhat)
+    xhat = (x - xm) / np.linalg.norm(x - xm)
+    yhat = (y - ym) / np.linalg.norm(y - ym)
+    ncc = (xhat * yhat).sum()
     return ncc
 
 
@@ -136,18 +136,18 @@ def mutual_info(x, y, bins=200, return_joint=False):
     """ calculate the mutual information for two data arrays """
     joint_hist, _, _ = np.histogram2d(x, y, bins=bins)
     pxy = joint_hist / x.size
-    px = np.sum(pxy, axis=1)
-    py = np.sum(pxy, axis=0)
+    px = pxy.sum(1)
+    py = pxy.sum(0)
     px_py = px[:, None] * py[None, :]  # Broadcast to multiply marginals (now 2d)
     nzxy = pxy > 0
-    mi = np.sum(pxy[nzxy] * np.log2(pxy[nzxy] / px_py[nzxy]))
-    return mi, pxy if return_joint else mi
+    mi = (pxy[nzxy] * np.log2(pxy[nzxy] / px_py[nzxy])).sum()
+    return (mi, pxy) if return_joint else mi
 
 
-def mssim(x, y, mask=None):
+def mssim(x, y, mask=None, multichannel=False):
     """ mean structural similarity (over a mask) """
-    min_val = min(0, np.min(x), np.min(y))  # for some reason, calculations change when values are negative
-    mssim, S = compare_ssim(x+min_val, y+min_val, full=True)
+    min_val = min(0, x.min(), y.min())  # for some reason, calculations change when values are negative
+    mssim, S = compare_ssim(x+min_val, y+min_val, full=True, multichannel=multichannel)
     if mask is not None:
         mssim = S[mask == 1].mean()
     return mssim
