@@ -26,7 +26,6 @@ class TestPlot(unittest.TestCase):
         self.mask_dir = os.path.join(wd, 'test_data', 'masks')
         self.out_dir = tempfile.mkdtemp()
 
-    @unittest.skipIf("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", "Skipping this test on Travis CI.")
     def test_directory_view(self):
         directory_view(self.data_dir, out_dir=self.out_dir, trim=False)
 

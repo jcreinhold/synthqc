@@ -4,7 +4,6 @@ synthqc
 [![Build Status](https://travis-ci.org/jcreinhold/synthqc.svg?branch=master)](https://travis-ci.org/jcreinhold/synthqc)
 [![Coverage Status](https://coveralls.io/repos/github/jcreinhold/synthqc/badge.svg?branch=master)](https://coveralls.io/github/jcreinhold/synthqc?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/synthqc/badge/?version=latest)](http://synthqc.readthedocs.io/en/latest/?badge=latest)
-[![Docker Automated Build](https://img.shields.io/docker/build/jcreinhold/synthqc.svg)](https://hub.docker.com/r/jcreinhold/synthqc/)
 [![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 This package supports a suite of quality analysis programs for MR/CT image synthesis.
